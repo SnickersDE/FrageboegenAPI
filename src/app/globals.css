@@ -1,0 +1,87 @@
+:root {
+  --bg: #0b0f19;
+  --panel: #141a2a;
+  --text: #e6e8ef;
+  --muted: #9aa4b2;
+  --accent: #4f7cff;
+  --accent2: #22c55e;
+}
+* {
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, \"Apple Color Emoji\", \"Segoe UI Emoji\";
+}
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.panel {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #1f283f;
+}
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #20325f;
+  background: #132044;
+  color: var(--text);
+  cursor: pointer;
+}
+.btn.primary {
+  background: #1b2b5d;
+  border-color: #2b478e;
+}
+.btn.success {
+  background: #123b2a;
+  border-color: #1a5e43;
+}
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #2a3658;
+  background: #0f1526;
+  color: var(--text);
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #1f283f;
+}
+.title {
+  font-weight: 700;
+  font-size: 18px;
+}
+.muted {
+  color: var(--muted);
+}
