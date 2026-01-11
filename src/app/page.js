@@ -69,6 +69,22 @@ export default function Page() {
           <li>Diese werden durch eigene Denkweisen subjektiv verzerrt.</li>
         </ul>
       </div>
+
+      <div className="panel col">
+        <h2>Berechnung des Schichtindexes</h2>
+        <p>
+          Schichtindex = 0,3 * Bildung + 0,4 * Einkommen + 0,3 * Berufliche Position.
+        </p>
+        <p>
+          Die Gewichtung folgt theoretischen Annahmen nach Bourdieu und arbeitsmarktsoziologischen Klassifikationen (ISEI), erhebt jedoch keinen Anspruch auf universelle Gültigkeit.
+        </p>
+        <p>
+          Der Chi-Quadrat-Test vergleicht die beobachteten Häufigkeiten in den Zellen unserer Kreuztabelle mit den erwarteten Häufigkeiten, die unter der Annahme vollständiger Unabhängigkeiten der Variablen resultieren würden. Ein signifikanter Testwert (Chi-Quadrat) weist darauf hin, dass die subjektive Wahrnehmung der sozialen Schicht systematisch mit dem Geschlecht variiert und nicht allein durch Zufall erklärt werden kann. Damit erlaubt der Test eine empirische Prüfung der theoretisch begründeten Annahme, dass geschlechtsspezifische Sozialisations- und Habitusstrukturen (Bourdieu) Einfluss auf subjektive Statusurteile haben.
+        </p>
+        <p>
+          Um eine Einordnung und Berechnung des Chi Quadrats vorzunehmen, mussten wir den Schichtindex in einem ordinal bewerteten Kategoriesystem umrechnen. Dies senkt die wissenschaftliche Verwertbarkeit, da der Index als kontinuierlicher Schichtindex ursprünglich zu betrachten ist. Die verwendeten Ordinalskalen resultieren aus der Gewichtung und Berechnung des Schichtindexes. Zur Berechnung haben wir immer zum nächst möglichen Skalenschritt auf bzw. abgerundet.
+        </p>
+      </div>
     </div>
   )
 }
