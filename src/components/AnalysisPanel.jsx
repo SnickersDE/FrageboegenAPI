@@ -23,6 +23,7 @@ export default function AnalysisPanel() {
       .from("quiz_responses")
       .select("*")
       .eq("test_type", "A")
+      .order("created_at", { ascending: true })
 
     if (error) {
       console.error("Error loading data:", error)

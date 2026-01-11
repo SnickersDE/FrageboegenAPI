@@ -44,7 +44,7 @@ export default function Page() {
   return (
     <div className="col" style={{ gap: 24 }}>
       <div className="row" style={{ justifyContent: "space-between", alignItems: "center" }}>
-        <h1>Analyse Dashboard</h1>
+        <h1>Analyse Dashboard (Test A)</h1>
         <button className="btn" onClick={resetAll} style={{ backgroundColor: "#ffdddd", color: "#d00" }}>
           Alle Daten zurücksetzen
         </button>
