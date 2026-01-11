@@ -21,7 +21,6 @@ export default function Page() {
         />
         <div className="row">
           <button className="btn primary" onClick={() => start("A")}>Test A starten</button>
-          <button className="btn primary" onClick={() => start("B")}>Test B starten</button>
         </div>
       </div>
     </div>
