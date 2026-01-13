@@ -50,6 +50,7 @@ export function getQuestionnaire(testType) {
         hint: "Hinweis für Befragte: Wenn Sie unsicher sind, wählen Sie bitte die Antwort, die am besten zu Ihrer aktuellen Tätigkeit passt.",
         type: "single",
         options: [
+          "Ich habe keine Berufsausbildung und arbeite zur Zeit nicht",
           "Ich habe keine Berufsausbildung, arbeite aber in einem Unternehmen",
           "Ich habe eine Ausbildung gemacht und arbeite in einem gelernten Beruf",
           "Ich habe eine feste Anstellung und treffe eigene Entscheidungen",

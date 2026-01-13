@@ -153,7 +153,7 @@ export default function AdvancedAnalysis({ data, onClose }) {
                       {item.val.toFixed(2)}
                     </span>
                   </td>
-                  <td style={{ padding: 8 }}>{interpret(item.val)}</td>
+                  <td style={{ padding: 8 }}>{interpret(item.val, item.symbol)}</td>
                 </tr>
               ))}
             </tbody>
@@ -192,7 +192,7 @@ export default function AdvancedAnalysis({ data, onClose }) {
                       {item.val.toFixed(2)}
                     </span>
                   </td>
-                  <td style={{ padding: 8 }}>{interpret(item.val)}</td>
+                  <td style={{ padding: 8 }}>{interpret(item.val, item.symbol)}</td>
                 </tr>
               ))}
             </tbody>
