@@ -16,7 +16,7 @@ export function getQuestionnaire(testType) {
         title: "Alter",
         prompt: "Wie alt sind Sie?",
         type: "single",
-        options: ["0–18", "18–29", "30–44", "45–59", "60+"]
+        options: ["0–17", "18–29", "30–44", "45–59", "60+"]
       },
       {
         number: 3,
@@ -52,7 +52,7 @@ export function getQuestionnaire(testType) {
         options: [
           "Ich habe keine Berufsausbildung und arbeite zur Zeit nicht",
           "Ich habe keine Berufsausbildung, arbeite aber in einem Unternehmen",
-          "Ich habe eine Ausbildung gemacht und arbeite in einem gelernten Beruf",
+          "Ich hab eine Ausbildung gemacht und arbeite in einem gelernten Beruf",
           "Ich habe eine feste Anstellung und treffe eigene Entscheidungen",
           "Ich habe eine feste Anstellung, treffe eigene Entscheidung und leite ein Team",
           "Ich arbeite in einer beruflichen Position im Management und trage die gesamte Verantwortung über eine Abteilung oder Personal"

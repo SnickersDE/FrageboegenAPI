@@ -58,10 +58,17 @@ export default function QuestionForm({ testType, userName, onSubmit }) {
                     />
                     <div style={{ textAlign: "left" }}>
                       {opt.split("\n").map((line, i) => (
-                        <span key={i}>
+                        <div 
+                          key={i} 
+                          style={{
+                            fontWeight: i === 0 && opt.split("\n").length > 1 ? "bold" : "normal",
+                            opacity: i > 0 ? 0.7 : 1,
+                            fontSize: i > 0 ? "0.9em" : "1em",
+                            marginTop: i > 0 ? 4 : 0
+                          }}
+                        >
                           {line}
-                          {i < opt.split("\n").length - 1 && <br />}
-                        </span>
+                        </div>
                       ))}
                     </div>
                   </label>

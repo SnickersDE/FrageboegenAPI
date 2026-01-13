@@ -39,7 +39,7 @@ export const calculateCoding = (answers) => {
   const jobMap = {
     "Ich habe keine Berufsausbildung und arbeite zur Zeit nicht": 0,
     "Ich habe keine Berufsausbildung, arbeite aber in einem Unternehmen": 1,
-    "Ich habe eine Ausbildung gemacht und arbeite in einem gelernten Beruf": 2,
+    "Ich hab eine Ausbildung gemacht und arbeite in einem gelernten Beruf": 2,
     "Ich habe eine feste Anstellung und treffe eigene Entscheidungen": 3,
     "Ich habe eine feste Anstellung, treffe eigene Entscheidung und leite ein Team": 4,
     "Ich arbeite in einer beruflichen Position im Management und trage die gesamte Verantwortung über eine Abteilung oder Personal": 5
