@@ -35,7 +35,7 @@ export default function QuestionForm({ testType, userName, onSubmit }) {
               style={{ resize: "vertical" }}
             />
           ) : (
-            <div className="row" style={{ flexWrap: "wrap" }}>
+            <div className="row options-container" style={{ flexWrap: "wrap" }}>
               {q.options.map((opt) => {
                 const checked = answers[q.number] === opt
                 return (

@@ -13,9 +13,9 @@ export default function RootLayout({ children }) {
         <header className="header">
           <div className="row" style={{ alignItems: "center", gap: 12 }}>
             <Link href="/">
-              <img src="/logo.png" alt="Logo" style={{ height: 160, cursor: "pointer" }} />
+              <img src="/logo.png" alt="Logo" className="logo-img" />
             </Link>
-            <div className="title" style={{ fontSize: "36px" }}>Quiz / Fragebögen</div>
+            <div className="title app-title">Quiz / Fragebögen</div>
           </div>
           <AdminLink />
         </header>
