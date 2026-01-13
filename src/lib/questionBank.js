@@ -46,7 +46,8 @@ export function getQuestionnaire(testType) {
         number: 6,
         code: "A6",
         title: "Berufliche Position",
-        prompt: "Welche berufliche Position nehmen Sie aktuell ein?\nHinweis für Befragte: Wenn Sie unsicher sind, wählen Sie bitte die Antwort, die am besten zu Ihrer aktuellen Tätigkeit passt.",
+        prompt: "Welche berufliche Position nehmen Sie aktuell ein?",
+        hint: "Hinweis für Befragte: Wenn Sie unsicher sind, wählen Sie bitte die Antwort, die am besten zu Ihrer aktuellen Tätigkeit passt.",
         type: "single",
         options: [
           "Ich habe keine Berufsausbildung, arbeite aber in einem Unternehmen",

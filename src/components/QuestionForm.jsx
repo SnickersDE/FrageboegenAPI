@@ -39,7 +39,15 @@ export default function QuestionForm({ testType, userName, onSubmit }) {
               {q.options.map((opt) => {
                 const checked = answers[q.number] === opt
                 return (
-                  <label key={opt} className="btn" style={{ background: checked ? "#1b2b5d" : undefined }}>
+                  <label 
+                    key={opt} 
+                    className="btn" 
+                    style={{ 
+                      background: checked ? "#1b2b5d" : undefined,
+                      borderColor: checked ? "orange" : undefined,
+                      borderWidth: checked ? "2px" : "1px"
+                    }}
+                  >
                     <input
                       type="radio"
                       name={`q${q.number}`}
@@ -48,10 +56,27 @@ export default function QuestionForm({ testType, userName, onSubmit }) {
                       onChange={() => setAnswer(q.number, opt)}
                       style={{ display: "none" }}
                     />
-                    {opt}
+                    <div style={{ textAlign: "left" }}>
+                      {opt.split("\n").map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          {i < opt.split("\n").length - 1 && <br />}
+                        </span>
+                      ))}
+                    </div>
                   </label>
                 )
               })}
+            </div>
+          )}
+          {q.hint && (
+            <div className="muted" style={{ 
+              marginTop: 8, 
+              background: "rgba(255,255,255,0.05)", 
+              padding: 8, 
+              borderRadius: 4 
+            }}>
+              {q.hint}
             </div>
           )}
         </div>

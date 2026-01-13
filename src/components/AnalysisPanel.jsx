@@ -3,11 +3,14 @@ import { useEffect, useMemo, useState } from "react"
 import { getSupabaseClient } from "@/lib/supabaseClient"
 import { getQuestionnaire } from "@/lib/questionBank"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Cell } from "recharts"
+import { calculateCoding, calculateIndex } from "@/lib/analysisUtils"
+import AdvancedAnalysis from "@/components/AdvancedAnalysis"
 
 export default function AnalysisPanel() {
   const [data, setData] = useState([])
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   useEffect(() => {
     loadData()
@@ -30,21 +33,11 @@ export default function AnalysisPanel() {
       setLoading(false)
       return
     }
-
-    // Group by user_id (since responses are individual rows per question)
-    // Actually, the table structure is: id, test_type, user_name, question_number, answer
-    // We need to group by user_name (assuming unique per session/user, but strictly we might need a session ID. 
-    // For this MVP, we group by user_name + created_at roughly, or just assume user_name is unique enough for the demo context 
-    // or we just process everything. The prompt implies "Teilnehmer-ID", but we only have user_name.
-    // Let's group by user_name for now.
     
     const users = {}
     responses.forEach(r => {
-      // Create a unique key for the user attempt if needed, but user_name is the best we have
       const key = r.user_name
       if (!users[key]) users[key] = { id: key, answers: {} }
-      // Map question code based on number. A1 is number 1, etc.
-      // We can look up code from questionBank but simplistic mapping works:
       users[key].answers[`A${r.question_number}`] = r.answer
     })
 
@@ -52,84 +45,11 @@ export default function AnalysisPanel() {
       const coding = calculateCoding(user.answers)
       const index = calculateIndex(coding)
       return { ...user, coding, index }
-    }).filter(u => u.index !== null) // Filter out incomplete data if necessary
+    }).filter(u => u.index !== null)
 
     setData(processedData)
     calculateStatistics(processedData)
     setLoading(false)
-  }
-
-  const calculateCoding = (answers) => {
-    // Coding logic based on prompt
-    const c = {}
-
-    // Bildung (A3 & A10)
-    // A3 Scores
-    const eduMapA3 = {
-      "Kein Abschluss": 1,
-      "Hauptschule": 2,
-      "Realschule": 3,
-      "Abitur": 4,
-      "Universitäts-Abschluss (Bachelor, Master)": 5
-    }
-    const scoreA3 = eduMapA3[answers["A3"]] || 1
-
-    // A10 Scores
-    const eduMapA10 = {
-      "Kein Berufsabschluss": 1,
-      "Berufsausbildung (z. B. Lehre, duale Ausbildung) - Ich habe eine abgeschlossene Berufsausbildung.": 2,
-      "Noch in Ausbildung / Studium - Ich mache aktuell eine Ausbildung oder ein Studium.": 2,
-      "Meister:in / Techniker:in / Fachwirt:in - Ich habe eine berufliche Weiterbildung über die Ausbildung hinaus.": 3,
-      "Hochschulabschluss (Bachelor, Master, Diplom, Staatsexamen) - Ich habe einen Studienabschluss.": 4,
-      "Promotion - Ich habe einen Doktortitel.": 5
-    }
-    const scoreA10 = eduMapA10[answers["A10"]] || 1
-    
-    // Weighted Education: 40% A3, 60% A10
-    c.education = (0.4 * scoreA3) + (0.6 * scoreA10)
-
-    // Einkommen (A5)
-    // Options: "Unter 1.500 €", "1.500–2.500 €", "2.501–3.500 €", "Über 3.500 €"
-    const incMap = {
-      "Unter 1.500 €": 1,
-      "1.500–2.500 €": 2,
-      "2.501–3.500 €": 3,
-      "Über 3.500 €": 4
-    }
-    c.income = incMap[answers["A5"]] || 0
-
-    // Beruf (A6)
-    const jobMap = {
-      "Ich habe keine Berufsausbildung, arbeite aber in einem Unternehmen": 1,
-      "Ich habe eine Ausbildung gemacht und arbeite in einem gelernten Beruf": 2,
-      "Ich habe eine feste Anstellung und treffe eigene Entscheidungen": 3,
-      "Ich habe eine feste Anstellung, treffe eigene Entscheidung und leite ein Team": 4,
-      "Ich arbeite in einer beruflichen Position im Management und trage die gesamte Verantwortung über eine Abteilung oder Personal": 5
-    }
-    c.job = jobMap[answers["A6"]] || 0
-
-    // Subjektive Schicht (A7)
-    // Matching start of string since options have long descriptions
-    const ansA7 = answers["A7"] || ""
-    let subjScore = 0
-    if (ansA7.startsWith("Unterschicht")) subjScore = 1
-    else if (ansA7.startsWith("Untere Mittelschicht")) subjScore = 2
-    else if (ansA7.startsWith("Mittelschicht")) subjScore = 3
-    else if (ansA7.startsWith("Obere Mittelschicht")) subjScore = 4
-    else if (ansA7.startsWith("Oberschicht")) subjScore = 5
-    
-    c.subjective = subjScore
-
-    // Gender (A1)
-    c.gender = answers["A1"] || "Unknown"
-
-    return c
-  }
-
-  const calculateIndex = (coding) => {
-    if (!coding.education || !coding.income || !coding.job) return null
-    // Formula: 0.3 * Bildung + 0.4 * Einkommen + 0.3 * Berufliche Position
-    return (0.3 * coding.education) + (0.4 * coding.income) + (0.3 * coding.job)
   }
 
   const calculateStatistics = (dataset) => {
@@ -169,11 +89,11 @@ export default function AnalysisPanel() {
     })
   }
 
-  // Simple Boxplot visualization (Simulated with Bar chart range for MVP or just Scatter/Distribution)
-  // Recharts BoxPlot is beta/complex. We will use a composed chart or just plot points.
-  // Let's stick to a simple distribution chart: Index vs Gender (Scatter) or Bar chart of Averages.
-
   if (loading) return <div>Lade Daten...</div>
+
+  if (showAdvanced) {
+    return <AdvancedAnalysis data={data} onClose={() => setShowAdvanced(false)} />
+  }
 
   return (
     <div className="col" style={{ gap: 32 }}>
@@ -191,11 +111,6 @@ export default function AnalysisPanel() {
              {stats?.genderStats.map(g => (
                <div key={g.gender}>{g.gender}: {g.mean.toFixed(2)} (n={g.count})</div>
              ))}
-             {stats?.chiSquare !== null && (
-               <div style={{ marginTop: 8 }}>
-                 <strong>Chi-Quadrat (Geschlecht vs. Subj. Schicht):</strong> {stats?.chiSquare?.toFixed(2)}
-               </div>
-             )}
           </div>
         </div>
       </div>
@@ -249,7 +164,7 @@ export default function AnalysisPanel() {
                 <tr key={i} style={{ borderBottom: "1px solid #eee" }}>
                   <td style={{ padding: 8 }}>{row.id}</td>
                   <td style={{ padding: 8 }}>{row.coding.gender}</td>
-                  <td style={{ padding: 8 }}>{row.coding.education}</td>
+                  <td style={{ padding: 8 }}>{row.coding.education.toFixed(2)}</td>
                   <td style={{ padding: 8 }}>{row.coding.income}</td>
                   <td style={{ padding: 8 }}>{row.coding.job}</td>
                   <td style={{ padding: 8 }}>{row.coding.subjective}</td>
@@ -259,6 +174,12 @@ export default function AnalysisPanel() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center", padding: 24 }}>
+        <button className="btn primary" onClick={() => setShowAdvanced(true)} style={{ fontSize: "1.2rem", padding: "12px 24px" }}>
+          Erweiterte Analyse anzeigen
+        </button>
       </div>
     </div>
   )
