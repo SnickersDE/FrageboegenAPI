@@ -63,15 +63,30 @@ export default function AnalysisPanel() {
     // Coding logic based on prompt
     const c = {}
 
-    // Bildung (A3)
-    const eduMap = {
+    // Bildung (A3 & A10)
+    // A3 Scores
+    const eduMapA3 = {
       "Kein Abschluss": 1,
       "Hauptschule": 2,
       "Realschule": 3,
       "Abitur": 4,
-      "Hochschulabschluss": 5
+      "Universitäts-Abschluss (Bachelor, Master)": 5
     }
-    c.education = eduMap[answers["A3"]] || 0
+    const scoreA3 = eduMapA3[answers["A3"]] || 1
+
+    // A10 Scores
+    const eduMapA10 = {
+      "Kein Berufsabschluss": 1,
+      "Berufsausbildung (z. B. Lehre, duale Ausbildung) - Ich habe eine abgeschlossene Berufsausbildung.": 2,
+      "Noch in Ausbildung / Studium - Ich mache aktuell eine Ausbildung oder ein Studium.": 2,
+      "Meister:in / Techniker:in / Fachwirt:in - Ich habe eine berufliche Weiterbildung über die Ausbildung hinaus.": 3,
+      "Hochschulabschluss (Bachelor, Master, Diplom, Staatsexamen) - Ich habe einen Studienabschluss.": 4,
+      "Promotion - Ich habe einen Doktortitel.": 5
+    }
+    const scoreA10 = eduMapA10[answers["A10"]] || 1
+    
+    // Weighted Education: 40% A3, 60% A10
+    c.education = (0.4 * scoreA3) + (0.6 * scoreA10)
 
     // Einkommen (A5)
     // Options: "Unter 1.500 €", "1.500–2.500 €", "2.501–3.500 €", "Über 3.500 €"
@@ -84,25 +99,26 @@ export default function AnalysisPanel() {
     c.income = incMap[answers["A5"]] || 0
 
     // Beruf (A6)
-    // Options: "Ungelernte Tätigkeit", "Fachkraft / Facharbeiter:in", "Angestellte:r ohne Führungsverantwortung", "Angestellte:r mit Führungsverantwortung", "Leitende Position / Management (z. B. Abteilungsleiter:in, Geschäftsführer:in)"
     const jobMap = {
-      "Ungelernte Tätigkeit": 1,
-      "Fachkraft / Facharbeiter:in": 2,
-      "Angestellte:r ohne Führungsverantwortung": 3,
-      "Angestellte:r mit Führungsverantwortung": 4,
-      "Leitende Position / Management (z. B. Abteilungsleiter:in, Geschäftsführer:in)": 5
+      "Ich habe keine Berufsausbildung, arbeite aber in einem Unternehmen": 1,
+      "Ich habe eine Ausbildung gemacht und arbeite in einem gelernten Beruf": 2,
+      "Ich habe eine feste Anstellung und treffe eigene Entscheidungen": 3,
+      "Ich habe eine feste Anstellung, treffe eigene Entscheidung und leite ein Team": 4,
+      "Ich arbeite in einer beruflichen Position im Management und trage die gesamte Verantwortung über eine Abteilung oder Personal": 5
     }
     c.job = jobMap[answers["A6"]] || 0
 
     // Subjektive Schicht (A7)
-    const classMap = {
-      "Unterschicht": 1,
-      "Untere Mittelschicht": 2,
-      "Mittelschicht": 3,
-      "Obere Mittelschicht": 4,
-      "Oberschicht": 5
-    }
-    c.subjective = classMap[answers["A7"]] || 0
+    // Matching start of string since options have long descriptions
+    const ansA7 = answers["A7"] || ""
+    let subjScore = 0
+    if (ansA7.startsWith("Unterschicht")) subjScore = 1
+    else if (ansA7.startsWith("Untere Mittelschicht")) subjScore = 2
+    else if (ansA7.startsWith("Mittelschicht")) subjScore = 3
+    else if (ansA7.startsWith("Obere Mittelschicht")) subjScore = 4
+    else if (ansA7.startsWith("Oberschicht")) subjScore = 5
+    
+    c.subjective = subjScore
 
     // Gender (A1)
     c.gender = answers["A1"] || "Unknown"
