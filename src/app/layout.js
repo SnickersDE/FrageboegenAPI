@@ -17,7 +17,17 @@ export default function RootLayout({ children }) {
             </Link>
             <div className="title app-title">Quiz / Fragebögen</div>
           </div>
-          <AdminLink />
+          <div className="row" style={{ alignItems: "center", gap: 16 }}>
+            <nav className="lang-nav">
+              <span className="flag">🇷🇺</span>
+              <span className="flag">🇺🇦</span>
+              <span className="flag">🇬🇧</span>
+              <span className="flag">🇹🇷</span>
+              <span className="flag">🇸🇦</span>
+              <span className="flag">🇩🇪</span>
+            </nav>
+            <AdminLink />
+          </div>
         </header>
         <main className="container">{children}</main>
       </body>

@@ -79,6 +79,15 @@ a {
   padding: 16px 24px;
   border-bottom: 1px solid #1f283f;
 }
+.lang-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flag {
+  font-size: 24px;
+  line-height: 1;
+}
 .title {
   font-weight: 700;
   font-size: 18px;
@@ -123,6 +132,9 @@ a {
 
   .app-title {
     font-size: 20px; /* Smaller title on mobile */
+  }
+  .lang-nav {
+    margin-top: 4px;
   }
 
   /* Stack options vertically on mobile */
