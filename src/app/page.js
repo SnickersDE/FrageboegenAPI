@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 export default function Page() {
   const [name, setName] = useState("")
   const router = useRouter()
+  const [showConsent, setShowConsent] = useState(false)
 
   const start = (type) => {
     if (!name.trim()) return
@@ -22,8 +23,19 @@ export default function Page() {
           placeholder="Dein Name"
         />
         <div className="row">
-          <button className="btn primary" onClick={() => start("A")}>Test A starten</button>
+          <button className="btn primary" onClick={() => setShowConsent(true)}>Test A starten</button>
         </div>
+        {showConsent && (
+          <div className="panel col" style={{ marginTop: 16 }}>
+            <p>
+              Bestätige diesen Hinweis, wenn du mit der Verarbeitung deiner Daten einverstanden bist.
+              Deine personenbezogenen Daten werden nicht gespeichert und dienen dem angegebenen Forschungszweck.
+            </p>
+            <button className="btn success" onClick={() => start("A")}>
+              Jetzt bestätigen
+            </button>
+          </div>
+        )}
       </div>
 
       <div
