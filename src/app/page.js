@@ -99,36 +99,36 @@ export default function Page() {
           <h2 className="info-panel-title">Informationen für Probandinnen und Probanden</h2>
           <ol className="info-panel-list">
             <li>
-              <strong>1. Titel der Studie</strong><br />
+              <strong> Titel der Studie</strong><br />
               Zusammenhänge zwischen Geschlecht und sozialer Schichtzugehörigkeit.
             </li>
             <li>
-              <strong>2. Ziel und Zweck der Studie</strong><br />
+              <strong> Ziel und Zweck der Studie</strong><br />
               Ziel dieser Untersuchung ist es, einen Zusammenhang zwischen dem eigenen Geschlecht und der Zugehörigkeit einer spezifischen sozialen Schicht nachzuweisen.
               Die Studie dient ausschließlich wissenschaftlichen Zwecken im Rahmen der Erarbeitung von Schwerpunkten in dem didaktischen Vorgang der PISA Studie im Fach Forschungsmethoden.
             </li>
             <li>
-              <strong>3. Ablauf der Teilnahme</strong><br />
+              <strong> Ablauf der Teilnahme</strong><br />
               Die Teilnahme umfasst das Ausfüllen eines Fragebogens und dauert nicht länger als 10 Minuten.
               Es werden Fragen zu Ihren persönlichen Daten wie Geschlecht, Alter und beruflicher Situation gestellt. Es sind keine Leistungsüberprüfungen vorgesehen.
             </li>
             <li>
-              <strong>4. Freiwilligkeit der Teilnahme</strong><br />
+              <strong> Freiwilligkeit der Teilnahme</strong><br />
               Die Teilnahme an der Studie ist freiwillig.
               Sie können Ihre Teilnahme jederzeit ohne Angabe von Gründen abbrechen, ohne dass Ihnen daraus Nachteile entstehen.
             </li>
             <li>
-              <strong>5. Risiken und Belastungen</strong><br />
+              <strong> Risiken und Belastungen</strong><br />
               Mit der Teilnahme an dieser Studie sind keine bekannten Risiken verbunden.
               Sollten einzelne Fragen als unangenehm empfunden werden, können diese übersprungen oder die Teilnahme beendet werden.
             </li>
             <li>
-              <strong>6. Nutzen der Studie</strong><br />
+              <strong> Nutzen der Studie</strong><br />
               Ein direkter persönlicher Nutzen entsteht Ihnen durch die Teilnahme nicht.
               Die Ergebnisse leisten jedoch einen Beitrag zur wissenschaftlichen Erkenntnis im Bereich Bildung, Sozialisation, berufliche Entwicklung.
             </li>
             <li>
-              <strong>7. Datenschutz und Vertraulichkeit</strong><br />
+              <strong> Datenschutz und Vertraulichkeit</strong><br />
               Die Erhebung und Verarbeitung der Daten erfolgt anonym beziehungsweise pseudonymisiert gemäß der Datenschutz-Grundverordnung.
               Es werden keine personenbezogenen Daten erhoben, die eine Identifikation ermöglichen.
               Die Daten werden ausschließlich für wissenschaftliche Zwecke verwendet.
@@ -136,15 +136,15 @@ export default function Page() {
               Die Daten werden nach Abschluss der Auswertung gelöscht.
             </li>
             <li>
-              <strong>8. Einwilligung</strong><br />
+              <strong> Einwilligung</strong><br />
               Mit Ihrer Teilnahme erklären Sie sich damit einverstanden, dass Ihre Angaben im beschriebenen Umfang für wissenschaftliche Zwecke verwendet werden.
             </li>
             <li>
-              <strong>9. Kontakt und Rückfragen</strong><br />
+              <strong> Kontakt und Rückfragen</strong><br />
               Bei Fragen zur Studie oder zu Ihren Rechten als Teilnehmende wenden Sie sich bitte an: Florian Troegel, Universität Stuttgart, Student, E-Mail: Florian_97@live.de.
             </li>
             <li>
-              <strong>10. Hinweis auf Ethik</strong><br />
+              <strong> Hinweis auf Ethik</strong><br />
               Diese Studie wird unter Beachtung der ethischen Standards sozialwissenschaftlicher Forschung durchgeführt.
             </li>
           </ol>
