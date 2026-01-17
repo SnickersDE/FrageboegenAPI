@@ -95,6 +95,19 @@ a {
 .muted {
   color: var(--muted);
 }
+.info-panel {
+  border-color: #b91c1c;
+  background: #241016;
+}
+.info-panel-title {
+  color: #f97373;
+  margin-bottom: 8px;
+}
+.info-panel-list {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.5;
+}
 
 /* Custom classes for Logo and Title to handle responsiveness */
 .logo-img {
