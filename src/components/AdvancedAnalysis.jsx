@@ -26,6 +26,62 @@ export default function AdvancedAnalysis({ data, onClose }) {
     }
   }, [data])
 
+  // Calculate descriptive statistics by Gender and T-Tests
+  const genderAnalysis = useMemo(() => {
+    const validWithGender = data.filter(d => 
+      d.index !== null && 
+      d.coding.subjective > 0 &&
+      d.coding.genderCode !== null
+    )
+
+    const males = validWithGender.filter(d => d.coding.genderCode === 0)
+    const females = validWithGender.filter(d => d.coding.genderCode === 1)
+
+    // Vectors for T-Test
+    const mObj = males.map(d => d.index)
+    const fObj = females.map(d => d.index)
+    const mSubj = males.map(d => d.coding.subjective)
+    const fSubj = females.map(d => d.coding.subjective)
+
+    // Stats
+    const stats = {
+      males: {
+        count: males.length,
+        obj: {
+          mean: mean(mObj),
+          median: median(mObj),
+          stdDev: stdDev(mObj)
+        },
+        subj: {
+          mean: mean(mSubj),
+          median: median(mSubj),
+          stdDev: stdDev(mSubj)
+        }
+      },
+      females: {
+        count: females.length,
+        obj: {
+          mean: mean(fObj),
+          median: median(fObj),
+          stdDev: stdDev(fObj)
+        },
+        subj: {
+          mean: mean(fSubj),
+          median: median(fSubj),
+          stdDev: stdDev(fSubj)
+        }
+      }
+    }
+
+    // T-Tests
+    const tTests = {
+      objective: tTest(mObj, fObj),
+      subjective: tTest(mSubj, fSubj)
+    }
+
+    return { stats, tTests }
+  }, [data])
+
   // Calculate descriptive statistics for indices
   const stats = useMemo(() => {
     if (vectors.count === 0) return null
@@ -141,14 +197,14 @@ export default function AdvancedAnalysis({ data, onClose }) {
       {/* Descriptive Statistics */}
       {stats && (
         <div className="panel">
-          <h3>Deskriptive Statistik der Indizes</h3>
+          <h3>Deskriptive Statistik (Gesamt)</h3>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid #333" }}>
                   <th style={{ padding: 8, textAlign: "left" }}>Index</th>
-                  <th style={{ padding: 8, textAlign: "left" }}>Mittelwert (Ø)</th>
-                  <th style={{ padding: 8, textAlign: "left" }}>Median</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Mittelwert (M)</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Median (Md)</th>
                   <th style={{ padding: 8, textAlign: "left" }}>Standardabweichung (SD)</th>
                 </tr>
               </thead>
@@ -164,6 +220,94 @@ export default function AdvancedAnalysis({ data, onClose }) {
                   <td style={{ padding: 8 }}>{stats.subjective.mean.toFixed(2)}</td>
                   <td style={{ padding: 8 }}>{stats.subjective.median.toFixed(2)}</td>
                   <td style={{ padding: 8 }}>{stats.subjective.stdDev.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Gender Analysis & T-Test */}
+      {genderAnalysis && (
+        <div className="panel">
+          <h3>Statistik nach Geschlecht & T-Tests</h3>
+          
+          <h4 style={{ marginTop: 16, marginBottom: 8, color: "#aaa" }}>Deskriptive Werte nach Geschlecht</h4>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.9rem" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid #333" }}>
+                  <th style={{ padding: 8, textAlign: "left" }}>Variable</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Geschlecht</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>N</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Mittelwert (M)</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Median (Md)</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Standardabweichung (SD)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Objective Index Rows */}
+                <tr style={{ borderBottom: "1px solid #222", background: "rgba(255,255,255,0.02)" }}>
+                  <td style={{ padding: 8, fontWeight: "bold" }} rowSpan={2}>Objektiver Schichtindex</td>
+                  <td style={{ padding: 8 }}>Männlich</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.males.count}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.males.obj.mean.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.males.obj.median.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.males.obj.stdDev.toFixed(2)}</td>
+                </tr>
+                <tr style={{ borderBottom: "1px solid #222", background: "rgba(255,255,255,0.02)" }}>
+                  <td style={{ padding: 8 }}>Weiblich</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.females.count}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.females.obj.mean.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.females.obj.median.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.females.obj.stdDev.toFixed(2)}</td>
+                </tr>
+                {/* Subjective Index Rows */}
+                <tr style={{ borderBottom: "1px solid #222" }}>
+                  <td style={{ padding: 8, fontWeight: "bold" }} rowSpan={2}>Subjektiver Index</td>
+                  <td style={{ padding: 8 }}>Männlich</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.males.count}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.males.subj.mean.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.males.subj.median.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.males.subj.stdDev.toFixed(2)}</td>
+                </tr>
+                <tr style={{ borderBottom: "1px solid #222" }}>
+                  <td style={{ padding: 8 }}>Weiblich</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.females.count}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.females.subj.mean.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.females.subj.median.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.stats.females.subj.stdDev.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 style={{ marginTop: 24, marginBottom: 8, color: "#aaa" }}>T-Test (Gruppenvergleich Männlich vs. Weiblich)</h4>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.9rem" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid #333" }}>
+                  <th style={{ padding: 8, textAlign: "left" }}>Vergleichsvariable</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>t-Wert</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Freiheitsgrade (df)</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>p-Wert</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Interpretation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ borderBottom: "1px solid #222" }}>
+                  <td style={{ padding: 8, fontWeight: "bold" }}>Objektiver Schichtindex</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.tTests.objective ? genderAnalysis.tTests.objective.t.toFixed(3) : "-"}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.tTests.objective ? genderAnalysis.tTests.objective.df.toFixed(2) : "-"}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.tTests.objective ? genderAnalysis.tTests.objective.p.toFixed(4) : "-"}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.tTests.objective ? genderAnalysis.tTests.objective.interpretation : "-"}</td>
+                </tr>
+                <tr style={{ borderBottom: "1px solid #222" }}>
+                  <td style={{ padding: 8, fontWeight: "bold" }}>Subjektiver Index</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.tTests.subjective ? genderAnalysis.tTests.subjective.t.toFixed(3) : "-"}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.tTests.subjective ? genderAnalysis.tTests.subjective.df.toFixed(2) : "-"}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.tTests.subjective ? genderAnalysis.tTests.subjective.p.toFixed(4) : "-"}</td>
+                  <td style={{ padding: 8 }}>{genderAnalysis.tTests.subjective ? genderAnalysis.tTests.subjective.interpretation : "-"}</td>
                 </tr>
               </tbody>
             </table>
