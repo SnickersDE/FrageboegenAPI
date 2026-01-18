@@ -43,8 +43,8 @@ export default function QuestionForm({ testType, userName, onSubmit }) {
                     key={opt} 
                     className="btn" 
                     style={{ 
-                      background: checked ? "#1b2b5d" : undefined,
-                      borderColor: checked ? "orange" : undefined,
+                      background: checked ? "#123b2a" : undefined,
+                      borderColor: checked ? "#1a5e43" : undefined,
                       borderWidth: checked ? "2px" : "1px"
                     }}
                   >

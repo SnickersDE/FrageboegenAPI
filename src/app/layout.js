@@ -25,7 +25,8 @@ export default function RootLayout({ children }) {
               <img src="https://flagcdn.com/w40/tr.png" alt="TR" className="flag" />
               <img src="https://flagcdn.com/w40/sa.png" alt="SA" className="flag" />
               <img src="https://flagcdn.com/w40/de.png" alt="DE" className="flag" />
-            </nav>
+              </nav>
+            </div>
             <AdminLink />
           </div>
         </header>

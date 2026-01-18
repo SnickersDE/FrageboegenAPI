@@ -38,7 +38,8 @@ export function getQuestionnaire(testType) {
         number: 5,
         code: "A5",
         title: "Monatliches Netto-Einkommen",
-        prompt: "Wie viel Geld haben Sie im Monat (Netto) wirklich zur Verfügung?\n(Netto = das Geld, das nach Steuern und Abzügen auf Ihrem Konto ankommt)",
+        prompt: "Wie viel Geld haben Sie im Monat (Netto) wirklich zur Verfügung?",
+        hint: "Hinweis: Netto = das Geld, das nach Steuern und Abzügen auf Ihrem Konto ankommt",
         type: "single",
         options: ["Unter 1.500 €", "1.500–2.500 €", "2.501–3.500 €", "Über 3.500 €"]
       },
@@ -62,7 +63,8 @@ export function getQuestionnaire(testType) {
         number: 7,
         code: "A7",
         title: "Subjektive soziale Lage",
-        prompt: "Welcher sozialen Lage würden Sie sich selbst am ehesten zuordnen?\n(Es gibt keine richtige oder falsche Antwort. Gemeint ist ausschließlich Ihre aktuelle Lebens- und Einkommenssituation im Vergleich zur Gesamtbevölkerung.)",
+        prompt: "Welcher sozialen Lage würden Sie sich selbst am ehesten zuordnen?",
+        hint: "Hinweis: Es gibt keine richtige oder falsche Antwort. Gemeint ist ausschließlich Ihre aktuelle Lebens- und Einkommenssituation im Vergleich zur Gesamtbevölkerung.",
         type: "single",
         options: [
           "Unterschicht\nMenschen in dieser Gruppe verfügen über eher geringe finanzielle Mittel.\nDie Kosten von Miete und Lebensmittel beanspruchen meist das gesamte verfügbare Einkommen",

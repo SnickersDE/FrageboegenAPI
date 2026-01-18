@@ -15,7 +15,7 @@ export default function Page() {
     <div className="col" style={{ gap: 48 }}>
       <div className="panel col">
         <h1>Beginne die Umfrage</h1>
-        <span className="muted">Bitte einen fiktiven Namen eingeben</span>
+        <span className="muted">Wähle einen Namen, du musst nicht deinen echten Namen angeben.</span>
         <input
           className="input"
           value={name}
