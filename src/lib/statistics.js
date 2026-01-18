@@ -81,27 +81,67 @@ export const partial = (x, y, z) => {
 export const pValue = (r, n) => {
   if (Math.abs(r) >= 1) return 0
   const t = r * Math.sqrt((n - 2) / (1 - r * r))
-  // Very rough approximation or just return t-score. 
-  // Implementing full t-distribution CDF is hard. 
-  // We'll use a simple threshold check or placeholder.
-  // User asked for p-values. 
-  // We can use a simplified lookup // We'll use a simple threshold check or placeholder.
-  // For MVP, we'll just return the t-statistic and a rough significance level (*, **, ***).
-  // Or use a small helper for CDF if possible.
-  return t // Returning t for now, interpretation logic will handle stars
+  // Use betaInc to calculate correct p-value for Student's t
+  const df = n - 2
+  if (df <= 0) return 1
+  const x = df / (df + t * t)
+  return betaInc(x, 0.5 * df, 0.5)
 }
 
-// Student's t-distribution CDF approximation
-function studenttCDF(t, df) {
-  const x = (t + Math.sqrt(t * t + df)) / (2 * Math.sqrt(t * t + df));
-  // This is a placeholder. Implementing a full Beta incomplete function is complex.
-  // We will use a simpler approximation for p-value based on common thresholds for display.
-  // However, for a more "automatic" p-value, we can use an approximation.
+// Log Gamma Function (Lanczos Approximation)
+function logGamma(n) {
+  var x = n;
+  var tmp = x + 5.5;
+  tmp -= (x + 0.5) * Math.log(tmp);
+  var ser = 1.000000000190015;
+  var cof = [76.18009172947146, -86.50532032941677, 24.01409824083091,
+             -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
+  for (var j = 0; j <= 5; j++) {
+    ser += cof[j] / ++x;
+  }
+  return -tmp + Math.log(2.5066282746310005 * ser / n);
+}
+
+// Regularized Incomplete Beta Function Ix(a, b)
+function betaInc(x, a, b) {
+  if (x < 0 || x > 1) return 0;
   
-  // Using a very simple approximation for 2-tailed p-value
-  // This is NOT high precision but sufficient for general dashboarding without libraries.
-  // Based on "A simple approximation for the Student's t-distribution" (various sources)
-  return 0; // Placeholder, logic moved to tTest for simplicity
+  var lbeta = logGamma(a) + logGamma(b) - logGamma(a + b);
+  if (x > (a + 1) / (a + b + 2)) {
+    return 1 - betaInc(1 - x, b, a);
+  }
+  
+  var prefactor = Math.exp(Math.log(x) * a + Math.log(1 - x) * b - lbeta) / a;
+  
+  // Lentz's method for continued fraction
+  var f = 1.0;
+  var c = 1.0;
+  var d = 0.0;
+  
+  var i, m, numerator;
+  for (i = 1; i <= 200; i++) {
+    if (i % 2 === 0) {
+      m = i / 2;
+      numerator = (m * (b - m) * x) / ((a + 2 * m - 1) * (a + 2 * m));
+    } else {
+      m = (i - 1) / 2;
+      numerator = -((a + m) * (a + b + m) * x) / ((a + 2 * m) * (a + 2 * m + 1));
+    }
+    
+    d = 1 + numerator * d;
+    if (Math.abs(d) < 1e-30) d = 1e-30;
+    d = 1 / d;
+    
+    c = 1 + numerator / c;
+    if (Math.abs(c) < 1e-30) c = 1e-30;
+    
+    var delta = c * d;
+    f *= delta;
+    
+    if (Math.abs(delta - 1) < 1e-8) break;
+  }
+  
+  return prefactor * (1 / f);
 }
 
 export const tTest = (group1, group2) => {
@@ -125,37 +165,24 @@ export const tTest = (group1, group2) => {
   const den = (Math.pow(v1 / n1, 2) / (n1 - 1)) + (Math.pow(v2 / n2, 2) / (n2 - 1))
   const df = num / den
 
-  // p-value approximation (2-tailed)
-  // We can use a simplified lookup for infinite df (normal) if df is large, 
-  // or a basic approximation.
-  // For robustness without libraries, let's map t to p roughly.
-  // Using an approximation for the tail probability.
-  
-  // Approximation for 2-tailed p-value
-  // Source: https://en.wikipedia.org/wiki/Student%27s_t-distribution#Cumulative_distribution_function
-  // We'll use a known approximation or just return significance levels.
-  
-  // Let's try a better approximation than just stars.
-  // Using the Abramowitz and Stegun approximation for Normal distribution if df > 30
-  // For smaller df, it's less accurate but acceptable for this context.
-  
-  const z = Math.abs(t)
-  // Normal distribution CDF approximation (for large df, t converges to z)
-  // p = 2 * (1 - CDF(|t|))
-  const pApprox = 2 * (1 - (1 / (1 + 0.2316419 * z)) * (0.319381530 * Math.exp(-0.5 * z * z))) 
-  // Note: This is strictly for Normal (Z), but often used as proxy for T with moderate N.
-  // Given user wants "automatic p-value", this is a reasonable compromise without external deps.
+  // p-value calculation using Beta Regularized
+  // For two-tailed test: p = I_x(df/2, 1/2) where x = df / (df + t^2)
+  const x = df / (df + t * t)
+  const pValue = betaInc(x, 0.5 * df, 0.5)
+
+  // Ensure p-value is between 0 and 1
+  const p = Math.max(0, Math.min(1, pValue))
   
   let interpretation = ""
-  if (pApprox < 0.001) interpretation = "Hoch signifikanter Unterschied (p < .001)"
-  else if (pApprox < 0.01) interpretation = "Sehr signifikanter Unterschied (p < .01)"
-  else if (pApprox < 0.05) interpretation = "Signifikanter Unterschied (p < .05)"
+  if (p < 0.001) interpretation = "Hoch signifikanter Unterschied (p < .001)"
+  else if (p < 0.01) interpretation = "Sehr signifikanter Unterschied (p < .01)"
+  else if (p < 0.05) interpretation = "Signifikanter Unterschied (p < .05)"
   else interpretation = "Kein signifikanter Unterschied (p > .05)"
 
   return {
     t: t,
     df: df,
-    p: pApprox, // Note: This is Z-approx, technically t-dist is wider. 
+    p: p,
     interpretation
   }
 }
