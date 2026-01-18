@@ -1,6 +1,6 @@
 "use client"
 import { useMemo, useState } from "react"
-import { pearson, spearman, partial, mean, median, stdDev } from "@/lib/statistics"
+import { pearson, spearman, partial, mean, median, stdDev, tTest } from "@/lib/statistics"
 import { Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts"
 
 export default function AdvancedAnalysis({ data, onClose }) {
