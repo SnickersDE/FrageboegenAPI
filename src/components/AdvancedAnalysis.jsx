@@ -121,6 +121,39 @@ export default function AdvancedAnalysis({ data, onClose }) {
         <button onClick={onClose} className="btn">Zurück zum Dashboard</button>
       </div>
 
+      {/* Descriptive Statistics */}
+      {stats && (
+        <div className="panel">
+          <h3>Deskriptive Statistik der Indizes</h3>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid #333" }}>
+                  <th style={{ padding: 8, textAlign: "left" }}>Index</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Mittelwert (Ø)</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Median</th>
+                  <th style={{ padding: 8, textAlign: "left" }}>Standardabweichung (SD)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ borderBottom: "1px solid #222" }}>
+                  <td style={{ padding: 8, fontWeight: "bold" }}>Objektiver Schichtindex (0-5)</td>
+                  <td style={{ padding: 8 }}>{stats.objective.mean.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{stats.objective.median.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{stats.objective.stdDev.toFixed(2)}</td>
+                </tr>
+                <tr style={{ borderBottom: "1px solid #222" }}>
+                  <td style={{ padding: 8, fontWeight: "bold" }}>Subjektiver Index (1-5)</td>
+                  <td style={{ padding: 8 }}>{stats.subjective.mean.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{stats.subjective.median.toFixed(2)}</td>
+                  <td style={{ padding: 8 }}>{stats.subjective.stdDev.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       {/* Bivariate Correlations */}
       <div className="panel">
         <h3>Bivariate Korrelationen</h3>
