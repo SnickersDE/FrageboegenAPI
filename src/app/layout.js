@@ -19,12 +19,12 @@ export default function RootLayout({ children }) {
           </div>
           <div className="row" style={{ alignItems: "center", gap: 16 }}>
             <nav className="lang-nav">
-              <span className="flag">🇷🇺</span>
-              <span className="flag">🇺🇦</span>
-              <span className="flag">🇬🇧</span>
-              <span className="flag">🇹🇷</span>
-              <span className="flag">🇸🇦</span>
-              <span className="flag">🇩🇪</span>
+              <img src="https://flagcdn.com/w40/ru.png" alt="RU" className="flag" />
+              <img src="https://flagcdn.com/w40/ua.png" alt="UA" className="flag" />
+              <img src="https://flagcdn.com/w40/gb.png" alt="GB" className="flag" />
+              <img src="https://flagcdn.com/w40/tr.png" alt="TR" className="flag" />
+              <img src="https://flagcdn.com/w40/sa.png" alt="SA" className="flag" />
+              <img src="https://flagcdn.com/w40/de.png" alt="DE" className="flag" />
             </nav>
             <AdminLink />
           </div>
