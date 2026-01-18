@@ -1,6 +1,6 @@
 "use client"
 import { useMemo, useState } from "react"
-import { pearson, spearman, partial } from "@/lib/statistics"
+import { pearson, spearman, partial, mean, median, stdDev } from "@/lib/statistics"
 import { Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts"
 
 export default function AdvancedAnalysis({ data, onClose }) {
@@ -25,6 +25,23 @@ export default function AdvancedAnalysis({ data, onClose }) {
       count: validData.length
     }
   }, [data])
+
+  // Calculate descriptive statistics for indices
+  const stats = useMemo(() => {
+    if (vectors.count === 0) return null
+    return {
+      objective: {
+        mean: mean(vectors.index),
+        median: median(vectors.index),
+        stdDev: stdDev(vectors.index)
+      },
+      subjective: {
+        mean: mean(vectors.subjective),
+        median: median(vectors.subjective),
+        stdDev: stdDev(vectors.subjective)
+      }
+    }
+  }, [vectors])
 
   if (vectors.count < 3) {
     return <div className="panel">Nicht genügend Daten für erweiterte Analyse (n={vectors.count}). Benötigt mindestens 3 vollständige Datensätze. <button onClick={onClose} className="btn">Zurück</button></div>
