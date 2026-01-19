@@ -5,6 +5,8 @@ export default function Page() {
   const [name, setName] = useState("")
   const router = useRouter()
   const [showConsent, setShowConsent] = useState(false)
+  const [showStudyDetails, setShowStudyDetails] = useState(false)
+  const [selectedTopic, setSelectedTopic] = useState("")
 
   const start = (type) => {
     if (!name.trim()) return
