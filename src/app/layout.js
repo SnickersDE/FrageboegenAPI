@@ -1,6 +1,9 @@
 export const metadata = {
   title: "Gruppe 8",
-  description: "Quiz- und Auswertungs-App"
+  description: "Quiz- und Auswertungs-App",
+  icons: {
+    icon: "/logo.png",
+  }
 }
 import "./globals.css"
 import Link from "next/link"
