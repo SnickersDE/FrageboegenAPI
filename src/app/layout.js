@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Willkommen bei Fragebogen API",
+  title: "Gruppe 8",
   description: "Quiz- und Auswertungs-App"
 }
 import "./globals.css"
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
             <Link href="/">
               <img src="/logo.png" alt="Logo" className="logo-img" />
             </Link>
-            <div className="title app-title">Willkommen bei Fragebogen API</div>
+            <div className="title app-title">Gruppe 8</div>
           </div>
           <div className="row" style={{ alignItems: "center", gap: 16 }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>

@@ -41,7 +41,7 @@ export function getQuestionnaire(testType) {
         prompt: "Wie viel Geld haben Sie im Monat (Netto) wirklich zur Verfügung?",
         hint: "Hinweis: Netto = das Geld, das nach Steuern und Abzügen auf Ihrem Konto ankommt",
         type: "single",
-        options: ["Unter 1.500 €", "1.500–2.500 €", "2.501–3.500 €", "Über 3.500 €"]
+        options: ["Unter 1.500 €", "1.500–2.500 €", "2.501–3.500 €", "3.501 – 4.500 €", "Über 4.500 €"]
       },
       {
         number: 6,
@@ -56,13 +56,14 @@ export function getQuestionnaire(testType) {
           "Ich hab eine Ausbildung gemacht und arbeite in einem gelernten Beruf",
           "Ich habe eine feste Anstellung und treffe eigene Entscheidungen",
           "Ich habe eine feste Anstellung, treffe eigene Entscheidung und leite ein Team",
-          "Ich arbeite in einer beruflichen Position im Management und trage die gesamte Verantwortung über eine Abteilung oder Personal"
+          "Ich arbeite in einer beruflichen Position im Management und trage die gesamte Verantwortung über eine Abteilung oder Personal",
+          "Ich leite ein Unternehmen"
         ]
       },
       {
         number: 7,
         code: "A7",
-        title: "Subjektive soziale Lage",
+        title: "SubjektivGruppge",
         prompt: "Welcher sozialen Lage würden Sie sich selbst am ehesten zuordnen?",
         hint: "Hinweis: Es gibt keine richtige oder falsche Antwort. Gemeint ist ausschließlich Ihre aktuelle Lebens- und Einkommenssituation im Vergleich zur Gesamtbevölkerung.",
         type: "single",
