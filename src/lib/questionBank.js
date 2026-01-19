@@ -24,7 +24,7 @@ export function getQuestionnaire(testType) {
         title: "Höchster Bildungsabschluss",
         prompt: "Welchen höchsten Bildungsabschluss haben Sie?",
         type: "single",
-        options: ["Kein Abschluss", "Hauptschule", "Realschule", "Abitur", "Universitäts-Abschluss (Bachelor, Master)"]
+        options: ["Kein Abschluss", "Hauptschule", "Realschule oder Werkrealschule", "Abitur oder Fachabitur", "Hochschul-Abschluss (Bachelor, Master)"]
       },
       {
         number: 4,
@@ -67,11 +67,11 @@ export function getQuestionnaire(testType) {
         hint: "Hinweis: Es gibt keine richtige oder falsche Antwort. Gemeint ist ausschließlich Ihre aktuelle Lebens- und Einkommenssituation im Vergleich zur Gesamtbevölkerung.",
         type: "single",
         options: [
-          "Unterschicht\nMenschen in dieser Gruppe verfügen über eher geringe finanzielle Mittel.\nDie Kosten von Miete und Lebensmittel beanspruchen meist das gesamte verfügbare Einkommen",
-          "Untere Mittelschicht\nMenschen in dieser Gruppe können ihre alltägichen Ausgaben selber bezahlen, haben aber wenig Möglichkeiten zu Sparen, oder größere Anschaffungen zu machen.\nUnerwartete Ausgaben (z. B. Reparaturen) sind oft besondere Belastung.",
-          "Mittelschicht\nMenschen in dieser Gruppe verfügen über ein stabiles Einkommen, mit dem sie ihren Lebensstandard gut sichern können.\nNeben den laufenden Kosten sind Rücklagen, Urlaub oder größere Anschaffungen meist möglich.",
-          "Obere Mittelschicht\nMenschen in dieser Gruppe haben ein überdurchschnittliches Einkommen und einen hohen Lebensstandard.\nSie können regelmäßig sparen, investieren oder Vermögen aufbauen.",
-          "Oberschicht\nMenschen in dieser Gruppe verfügen über sehr hohe Einkommen oder erhebliches Vermögen.\nEinkommen stammt oft nicht nur aus der Arbeit, sondern auch aus Vermögen, Unternehmen oder Kapitalerträgen."
+          "Gruppe 1\nMenschen in dieser Gruppe verfügen über eher geringe finanzielle Mittel.\nDie Kosten von Miete und Lebensmittel beanspruchen meist das gesamte verfügbare Einkommen",
+          "Gruppe 2\nMenschen in dieser Gruppe können ihre alltägichen Ausgaben selber bezahlen, haben aber wenig Möglichkeiten zu Sparen, oder größere Anschaffungen zu machen.\nUnerwartete Ausgaben (z. B. Reparaturen) sind oft besondere Belastung.",
+          "Gruppe 3\nMenschen in dieser Gruppe verfügen über ein stabiles Einkommen, mit dem sie ihren Lebensstandard gut sichern können.\nNeben den laufenden Kosten sind Rücklagen, Urlaub oder größere Anschaffungen meist möglich.",
+          "Gruppe 4\nMenschen in dieser Gruppe haben ein überdurchschnittliches Einkommen und einen hohen Lebensstandard.\nSie können regelmäßig sparen, investieren oder Vermögen aufbauen.",
+          "Gruppe 5\nMenschen in dieser Gruppe verfügen über sehr hohe Einkommen oder erhebliches Vermögen.\nEinkommen stammt oft nicht nur aus der Arbeit, sondern auch aus Vermögen, Unternehmen oder Kapitalerträgen."
         ]
       },
       {

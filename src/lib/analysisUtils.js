@@ -6,9 +6,9 @@ export const calculateCoding = (answers) => {
   const eduMapA3 = {
     "Kein Abschluss": 1,
     "Hauptschule": 2,
-    "Realschule": 3,
-    "Abitur": 4,
-    "Universitäts-Abschluss (Bachelor, Master)": 5
+    "Realschule oder Werkrealschule": 3,
+    "Abitur oder Fachabitur": 4,
+    "Hochschul-Abschluss (Bachelor, Master)": 5
   }
   const scoreA3 = eduMapA3[answers["A3"]] || 1
 
@@ -31,7 +31,8 @@ export const calculateCoding = (answers) => {
     "Unter 1.500 €": 1,
     "1.500–2.500 €": 2,
     "2.501–3.500 €": 3,
-    "Über 3.500 €": 4
+    "3.501 – 4.500 €": 4,
+    "Über 4.500 €": 5
   }
   c.income = incMap[answers["A5"]] || 0
 
@@ -42,18 +43,19 @@ export const calculateCoding = (answers) => {
     "Ich hab eine Ausbildung gemacht und arbeite in einem gelernten Beruf": 2,
     "Ich habe eine feste Anstellung und treffe eigene Entscheidungen": 3,
     "Ich habe eine feste Anstellung, treffe eigene Entscheidung und leite ein Team": 4,
-    "Ich arbeite in einer beruflichen Position im Management und trage die gesamte Verantwortung über eine Abteilung oder Personal": 5
+    "Ich arbeite in einer beruflichen Position im Management und trage die gesamte Verantwortung über eine Abteilung oder Personal": 5,
+    "Ich leite ein Unternehmen": 5
   }
   c.job = jobMap[answers["A6"]] || 0
 
   // Subjektive Schicht (A7)
   const ansA7 = answers["A7"] || ""
   let subjScore = 0
-  if (ansA7.startsWith("Unterschicht")) subjScore = 1
-  else if (ansA7.startsWith("Untere Mittelschicht")) subjScore = 2
-  else if (ansA7.startsWith("Mittelschicht")) subjScore = 3
-  else if (ansA7.startsWith("Obere Mittelschicht")) subjScore = 4
-  else if (ansA7.startsWith("Oberschicht")) subjScore = 5
+  if (ansA7.startsWith("Gruppe 1")) subjScore = 1
+  else if (ansA7.startsWith("Gruppe 2")) subjScore = 2
+  else if (ansA7.startsWith("Gruppe 3")) subjScore = 3
+  else if (ansA7.startsWith("Gruppe 4")) subjScore = 4
+  else if (ansA7.startsWith("Gruppe 5")) subjScore = 5
   c.subjective = subjScore
 
   // Finanzielle Sicherheit (A8)
